@@ -1,0 +1,32 @@
+
+Version 1.45
+
+Version 1.46
+
+Version 1.47
+
+Version 1.48
+
+Version 1.49
+- Added : Mission - ResupplyAirDrop.
+- Added : Mission - RewardHelicopter.
+- Added : Mission - RewardJet.
+- Added : FNC LocationsObjects.
+- Added : FNC FillAmmocrate.
+- Added : Resupply timeout added and set for each event.
+- Added : Surveillance - UAV has a new WP end waypoint.
+- Added : Players start with a respawn tent backpack.
+- Added : FNC LocationsObjects added.
+- Added : RALLYUP_Assests - ResupplyWeapons, ResupplyMagazines,ResupplyItems and ResupplyBackpacks.
+- Added : Some missions will fail if everyones dead. 
+- Added : fn_create_MineField
+- Added : Some missions will have minefields/IED/Boobietraps
+
+
+- Removed : Arsenal from Spawn tent.
+- Removed : Arsenal from vehicle drop.
+- Removed : Vehicle at spawn.
+
+- Fixed : Load of back end stuff.
+- Fixed : Ambush mission is now a Real Ambush mission.
+

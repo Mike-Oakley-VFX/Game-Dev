@@ -1,0 +1,100 @@
+
+/*
+	Author: CodeRedFox
+	Uses: Creates a Barricade Task. Defend the area untill all units are destroyed.
+	Note: 
+	Usage: [position] execVM "missions\Primary_Barricade.sqf"
+	Examples:[position player] execVM "missions\Primary_Barricade.sqf";
+
+*/ diag_log format ["RallyUpDiag Starting : Primary_Barricade.sqf | %1",_this select 0];
+if (!isServer) exitwith {};
+
+ 
+	// Variables
+	
+		_TaskingPosition = _this select 0;
+		_Task_Status = "Canceled";
+				
+		_minDistance = RALLYUP_minDistance+((count allplayers)*50);
+		_maxDistance = RALLYUP_maxDistance+((count allplayers)*50);		
+		
+		_waveamount = RALLYUP_EnemyMultiplier + (ceil (random (count allplayers)));
+		
+	// Find Tasking Location
+		_Defend_Location = [_TaskingPosition,_minDistance,_maxDistance,RALLYUP_LocationsPopulace,5] call RALLYUP_fnc_position_Locations;
+		if (_Defend_Location distance2d _TaskingPosition > _maxDistance*2) exitWith {diag_log ["RallyUpDiag : Mission outside of _maxDistance"];true};	// Will cancel if the task to to far away	
+		
+		_LocationName = [_Defend_Location] call RALLYUP_fnc_position_LocationsName;
+		
+
+	// Diary
+		_taskTitle = ["Mission"] call RALLYUP_fnc_text_RandomName;
+		_taskPosition = _Defend_Location;
+		_taskType = "Defend";
+		_taskDescription = str formatText ["
+			<img image='\A3\UI_F_MP_Mark\Data\Tasks\Types\Defend_ca.paa' width='50px'/>
+			<br/>
+			<br/>O P S E C : -----------------
+			<br/>
+			<br/>	The local populace has been attacked.
+			<br/>	Move and defend %1
+			<br/>
+			<br/>O B J E C T I V E : -----------------
+			<br/>
+			<br/>	- Defend %1 until all enemies are defeated.
+			<br/>
+			<br/>
+			<br/>TIPS:
+			<br/>	Mission will be complete after all hostile are eliminated.
+			<br/>			
+		",_LocationName];	
+		_Task_Name = str formatText ["%1%2",_taskType,time];
+		_Task_Mission = [(RallyUpBluFor select 0),_Task_Name,[_taskDescription,_taskTitle,_taskType],[_taskPosition select 0,_taskPosition select 1,5],1,1,true,_taskType] call BIS_fnc_taskCreate;
+	
+	// Create Destruction	
+	
+	for "_i" from 1 to 10 do {	
+	
+		_buildingDestroyPos = [_taskPosition,0,250] call RALLYUP_fnc_position_LocationsBuilding;		
+		_buildingDestroy = _buildingDestroyPos nearestObject "Building";
+		if (random 100 > 1) then {_buildingDestroy setdamage 1;};
+			sleep 1;
+	};
+	
+		
+
+	
+	// Create Starting Enemy's	
+		[_Defend_Location,0,350,["Group","Static","Boats","Vehicles","Helicopters"],_waveamount+3,"PATROL"] spawn RALLYUP_fnc_create_Enemy;
+	
+		_FindBuildings = nearestObjects [_Defend_Location, ["Building"], 50];
+		{
+			[_x,RALLYUP_Groups_EnemyInf,5] call RALLYUP_fnc_create_PopulateBuilding;
+		} foreach _FindBuildings;
+	
+
+		[_Defend_Location,_minDistance,_matDistance,["AP","AT"],10*_waveamount] spawn RALLYUP_fnc_create_MineField;
+	
+	
+	// Task Event
+		waituntil {
+			sleep 15;			
+			_areaTrigger = [allplayers,(RallyUpBluFor select 0),_Defend_Location,_minDistance,75] call RALLYUP_fnc_task_isTriggered;							
+			if (_areaTrigger) exitWith {true;};
+				false
+		};
+		
+		[_Defend_Location,_waveamount] spawn RALLYUP_fnc_create_reinforcements;
+		
+		waituntil {
+			sleep 120;			
+			_areaTrigger = [allplayers,(RallyUpBluFor select 0),_Defend_Location,_minDistance,75] call RALLYUP_fnc_task_isTriggered;
+			_EnemyTrigger = [RALLYUP_TOTAL_ENEMY_UNITS,(RallyUpOpFor select 0),_Defend_Location,_maxDistance,10] call RALLYUP_fnc_task_isTriggered;						
+			if (_areaTrigger && !_EnemyTrigger) exitWith {_Task_Status = "Succeeded";true};
+				false
+		};
+	
+// Task End Events
+	[_Task_Mission,_Task_Status] call BIS_fnc_taskSetState; // "Succeeded","Failed","Canceled"
+	
+if(true) exitWith {};

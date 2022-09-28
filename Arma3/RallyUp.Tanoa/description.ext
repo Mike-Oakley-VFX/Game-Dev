@@ -1,0 +1,82 @@
+// START
+
+author="CodeRedFox";
+OnLoadName = "Rally Up";
+OnLoadMission = "Gameplay based on fast paced move, secure, and resuppy elements.";
+loadScreen = "data\loadScreen_RallyUp.paa";
+
+class Header {
+	gameType = COOP;
+	minPlayers = 1;
+	maxPlayers = 6;
+};
+
+onLoadIntro = "Rally Up";
+onLoadMissionTime = 1;
+onLoadIntroTime = 1;
+briefingName = "Rally Up";
+
+// Respawn
+respawn = "BASE";
+respawnButton = 1;
+respawnDelay = 5;
+respawnVehicleDelay = 30;
+respawnDialog = 1;
+respawnOnStart = 1;
+respawnTemplates[] = {"MenuPosition"};
+// respawnWeapons[] = {''};
+// respawnMagazines[] = {''};
+
+// player UI
+showHUD = 1;
+showCompass = 1;
+showGPS = 1;
+showGroupIndicator = 1;
+showMap = 1;
+showNotePad = 0;
+showWatch = 0;
+showUAVFeed = 0;
+
+// Starting Gear
+allowSubordinatesTakeWeapons = 1;
+allowProfileGlasses = 0;
+
+// Cleanup
+corpseManagerMode = 1;
+corpseLimit = 15;
+corpseRemovalMinTime = 10;
+corpseRemovalMaxTime = 600;
+wreckManagerMode = 1;
+wreckLimit = 15;
+wreckRemovalMinTime = 60;
+wreckRemovalMaxTime = 600;
+minPlayerDistance = 100;
+
+// others
+aiKills = 0; // 0: disabled - 1: enabled. Default: 0
+disabledAI = 1;
+briefing = 0; // 0: disabled - 1: enabled. Default: 1
+debriefing = 0; // 0: disabled - 1: enabled. Default: 1
+disableChannels[] ={0,2,4,6};
+enableDebugConsole = 1;
+enableTeamSwitch = 0;
+forceRotorLibSimulation = 0;
+joinUnassigned = 1;
+saving = 1;
+skipLobby = 0; // Skips Lobby
+
+// Server
+allowFunctionsLog = 1; 
+allowFunctionsRecompile = 1;
+zeusCompositionScriptLevel = 2;
+
+// Data includes
+#include "data\params.hpp"
+#include "data\CfgFunctions.hpp"
+#include "data\CfgSounds.hpp"
+#include "data\CfgTaskTypes.hpp"
+// #include "data\CfgDifficultyPresets.hpp"
+// #include "data\CfgRespawnTemplates.hpp"
+
+
+// END

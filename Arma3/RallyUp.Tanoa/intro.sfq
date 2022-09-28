@@ -1,0 +1,72 @@
+//***WHITE RAVEN***
+
+//Intro script file & guide...
+
+// (1) Turn the player into a camera by adding the following to players init
+
+		//  [] call BIS_fnc_cameraOld;
+
+// (2) Copy camera locations by pressing left click once per location
+
+// (3) Open the Arma clipboard ~ C:\Users\Raven\AppData\Local\Arma 3\clipboard.Text Document
+
+// (4) Ignoring the comment line (this is just the time the shot was taken) copy the 4 lines starting with _camera
+
+// (5) Paste each new camera location on top of existing positions below adding more or removing if required
+
+// (6) Replace
+
+		//  [] call BIS_fnc_cameraOld;
+		
+		//  with
+		
+		//  this = [] execVM "Intro.sqs";
+		
+		//  in the players init
+
+//Camera script setup...
+
+_camera = "camera" camCreate [0,0,0]; 							//creates camera
+_camera cameraEffect ["Internal","back"]; 						//position of the camera
+camUseNVG false; 												//true = turn night vision on, false = turn night vision off
+
+//1st Position for camera
+_camera camPrepareTarget [18045.54,-86493.19,-22460.99];			//what the camera is looking at
+_camera camPreparePos [10907.75,10744.15,10.72];				//the position of the camera
+_camera camPrepareFOV 0.700;									//camera field of view for example 0.700 = zoomed out, 0.300 = zoomed in & 0.500 between the 2
+_camera camCommitPrepared 0;									//how long the takes to get to this position from the previous in seconds (1st position should be set to 0)
+WaitUntil {camCommitted _camera};								//tells camera to do as above
+
+sleep 18;														//time in seconds the camera is held at that position
+
+//2nd Position for camera
+_camera camPrepareTarget [-76831.22,10862.56,-41065.89]; 		//what the camera is looking at
+_camera camPreparePos [14083.08,17311.13,35.94]; 				//the position of the camera
+_camera camPrepareFOV 0.700; 									//camera field of view for example 0.700 = zoomed out, 0.300 = zoomed in & 0.500 between the 2
+_camera camCommitPrepared 20; 									//how long the takes to get to this position from the previous in seconds (1st position should be set to 0)
+WaitUntil {camCommitted _camera}; 								//tells camera to do as above
+
+sleep 28; 														//time in seconds the camera is held at that position
+
+//3rd Position for camera
+_camera camPrepareTarget [-9448.59,-65624.48,-50609.20];		//what the camera is looking at
+_camera camPreparePos [13985.53,17340.69,13.55];				//the position of the camera
+_camera camPrepareFOV 0.500;									//camera field of view for example 0.700 = zoomed out, 0.300 = zoomed in & 0.500 between the 2
+_camera camCommitPrepared 5;									//how long the takes to get to this position from the previous in seconds (1st position should be set to 0)
+WaitUntil {camCommitted _camera};								//tells camera to do as above
+
+sleep 40;														//time in seconds the camera is held at that position
+
+//Camera with player (final position)
+_camera CamSetTarget p1;										//Camera is looking at p1 (p1 = what we called the player)
+_camera camsetRelpos [-1.0,5.0,3.0];							//the position of the camera relative to p1 [to the left/to the right,to the front/to the back,up/down]
+_camera camPrepareFOV 0.700;									//camera field of view for example 0.700 = zoomed out, 0.300 = zoomed in & 0.500 between the 2
+_camera camCommitPrepared 3;									//how long the takes to get to this position from the previous in seconds (1st position should be set to 0)
+WaitUntil {camCommitted _camera};								//tells camera to do as above
+
+sleep 3;														//time in seconds the camera is held at that position
+
+_camera CameraEffect ["Terminate","back"]; 						//shuts the camera down
+CamDestroy _camera; 											//destroys the camera ending the script
+
+// When the script ends you will be player/mission starts

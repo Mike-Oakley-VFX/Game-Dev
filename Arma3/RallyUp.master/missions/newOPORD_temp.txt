@@ -1,0 +1,38 @@
+
+		_taskTitle = ([] call RALLYUP_fnc_text_RandomName) select 0; // Calls random mission name
+		_taskWorld = worldName;
+		_taskPosition = _Task_Location;
+		_taskDate = date;
+		_taskTarget = _target
+		_taskType = "Defend"; // Attack, Defend, Destroy, Interact, Search, Support
+		_taskBluFor = (RallyUpBluFor select 0)Name;
+		_taskOpFor = (RallyUpOpFor select 0)Name;
+		
+		
+		_taskDescription = str formatText ["
+		<br/><t align='right'>
+		<br/>OPORD : _taskTitle
+		<br/>_taskWorld
+		<br/>_taskDate
+		<br/></t>
+		<br/>		
+		<br/>SITUATION :
+		<br/>	Enemy Forces : ((RallyUpBluFor select 0) select 1)
+		<br/>	Friendly Forces : ((RallyUpBluFor select 0) select 1) and (RallyUpCivForName select 1)
+		<br/>	
+		<br/>MISSION :
+		<br/>	An 
+		<br/>
+		<br/>
+		<br/>
+		<br/>EXECUTION :
+		<br/>
+		<br/>	 Look for and destroy the %1.
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<img image='\A3\UI_F_MP_Mark\Data\Tasks\Types\Defend_ca.paa' width='50px'/>
+
+		date,worldName,_taskTitle,_taskPosition,
+

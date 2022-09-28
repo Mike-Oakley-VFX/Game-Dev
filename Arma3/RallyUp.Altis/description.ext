@@ -1,0 +1,44 @@
+
+author="CodeRedFox";
+OnLoadName = "Rally Up";
+OnLoadMission = "Gameplay based on fast paced Move, Secure, and Resuppy elements.";
+loadScreen = "data\loadScreen_RallyUp.paa";
+
+class Header {
+	gameType = COOP;
+	maxPlayers = 10;
+	minPlayers = 1;
+};
+
+aikills = 1;
+disabledAI = 1;
+enableDebugConsole = 1;
+saving = 1;
+
+disableChannels[] ={0,2,4,6};
+
+// Respawn
+respawn = "BASE";
+respawnTemplates[] = {"MenuPosition","Revive"};
+respawnOnStart = 1;
+respawnDelay = 10;
+respawnVehicleDelay = 60;
+
+
+// Revive
+reviveDelay = 6;
+reviveForceRespawnDelay = 10;
+reviveBleedOutDelay = 120;
+
+// Cleanup
+corpseManagerMode = 1;
+corpseLimit = 15;
+wreckManagerMode = 1;
+wreckLimit = 15;
+
+// Data includes
+#include "data\params.hpp"
+#include "data\CfgFunctions.hpp"
+#include "data\CfgSounds.hpp"
+#include "data\CfgTaskTypes.hpp"
+//#include "data\CfgRespawnTemplates.hpp"
